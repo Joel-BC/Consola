@@ -1,0 +1,161 @@
+﻿@model Consola.Models.Sancion
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- /.box -->
+                <div class="box">
+
+                    <div class="box-header">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="table table-bordered" style="border:3px solid lightgrey;vertical-align:middle">
+                                    <th style="border:3px solid lightgrey" width="50">
+                                        <a href="javascript:history.back()" class="nav-link">
+                                            <img src="~/fonts/Imagenes/flecha_izquierda.png" width="64" height="32" />
+                                        </a>
+                                    </th>
+                                    <th td style="vertical-align:middle"><h3 class="box-title">Agregar sanción</h3></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    @if (Session["ROLES"].Equals("Admin"))
+                    {
+                        <div class="box-header">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="table table-bordered" style="border:3px solid lightgrey;vertical-align:middle">
+                                        <th style="border:3px solid lightgrey" width="50">
+
+                                            <div class="box">
+                                                <div class="box-header">
+                                                    <h3 class="box-title">Agregar una nueva cotizacion</h3>
+                                                </div>
+
+                                                <!-- /.box-header -->
+                                                @using (Html.BeginForm())
+                                                {
+                                                    <div class="box-body">
+                                                        <div class="form-horizontal">
+                                                            @Html.AntiForgeryToken()
+                                                            @Html.Hidden("idSanciones", 0)
+                                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.idEmpleado, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-6">
+                                                                    @Html.EditorFor(model => model.idEmpleado, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.idEmpleado, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.idDepartamento, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-6">
+                                                                    @Html.EditorFor(model => model.idDepartamento, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.idDepartamento, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.fechaSancion, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-6">
+                                                                    @Html.EditorFor(model => model.fechaSancion, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.fechaSancion, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.codigo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-6">
+                                                                    @Html.EditorFor(model => model.codigo, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.codigo, "", new { @class = "text-danger", Type = "Email" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-6">
+                                                                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger", Type = "Email" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.departamento, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-6">
+                                                                    @Html.EditorFor(model => model.departamento, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.departamento, "", new { @class = "text-danger", Type = "Email" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Detalles de la sanción:</label>
+                                                                <textarea class="form-control" name="txtDetalleSancion" placeholder="Inserte el texto aquí"> </textarea>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-start">
+                                                        <input class="btn btn-primary" type="submit" value="Guardar" id="guardar" name="guardar" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <h3 style="text-align:center;color:black">
+                            Este módulo no está disponible para este usuario.
+                        </h3>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#guardar").click, function () {
+                alert('Proveedor Guardado con exito!');
+            });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#buscar").click(function () {
+                $("#NombreProveedor").empty();
+                $("#TelefonoProveedor").empty();
+                $("#DireccionProveedor").empty();
+                $("#CorreoProveedor").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ConsultaProveedor")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({ identificacion: $("#IdentificacionProveedor").val() }),
+                    success: function (resultado) {
+                        $("#NombreProveedor").val(resultado[0].NombreProveedor);
+                        $("TelefonoProveedor").val(resultado[0].TelefonoProveedor);
+                        $("#DireccionProveeor").val(resultado[0].DireccionProveedor);
+                        $("#CorreoProveeor").val(resultado[0].CorreoProveedor);
+                    },
+                    error: function (ex) {
+                        alert('Fallo al consultar los datos : ' + ex);
+                    }
+                });
+            })
+
+        });
+    </script>
+}

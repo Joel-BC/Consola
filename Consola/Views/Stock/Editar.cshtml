@@ -1,0 +1,138 @@
+﻿@model Consola.Models.Stock
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="box">
+
+                    <div class="box-header">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="table table-bordered" style="border:3px solid lightgrey;vertical-align:middle">
+                                    <th style="border:3px solid lightgrey" width="50">
+                                        <a href="/Stock/Index" class="nav-link">
+                                            <img src="~/fonts/Imagenes/flecha_izquierda.png" width="64" height="32" />
+                                        </a>
+                                    </th>
+                                    <th td style="vertical-align:middle"><h3 class="box-title">Editar stock</h3></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div style="text-align:center;color:red">
+                        @TempData["errorMensaje"]
+                    </div>
+
+                    <div class="box-header">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="table table-bordered" style="border:3px solid lightgrey;vertical-align:middle">
+                                    <th style="border:3px solid lightgrey" width="50">
+
+                                        <div class="box">
+                                            <div class="box-header">
+                                                <h3 class="box-title">Agregar un nuevo ítem al stock</h3>
+                                            </div>
+
+                                            @using (Html.BeginForm())
+                                            {
+                                                @Html.AntiForgeryToken()
+
+                                                <div class="form-horizontal">
+                                                    <br />
+                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                                    @Html.HiddenFor(model => model.idStock, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.codigo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-10">
+                                                            @Html.EditorFor(model => model.codigo, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.codigo, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.nombreProducto, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-10">
+                                                            @Html.EditorFor(model => model.nombreProducto, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.nombreProducto, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.unidad, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                        <div class="col-md-10">
+                                                            @Html.EditorFor(model => model.unidad, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.unidad, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-6">
+                                                            <label>Bodega:</label>
+                                                            @Html.DropDownList("listCodigoBodega", new SelectList(ViewBag.Lista, "codigoBodega", "nombreBodega"), new { htmlAttributes = new { @type = "text", @class = "form-control", @id = "listCodigoBodega", @name = "listCodigoBodega" } })
+                                                            <button id="buscar" class="btn btn-primary" name="buscar" type="button" onclick="ObtenerCodigo()">Buscar código de bodega</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-6">
+                                                            <label>Código bodega:</label>
+                                                            <input class="form-control" type="text" name="txtCodigoBodega" id="txtCodigoBodega">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-md-6">
+                                                            <label>Proveedor:</label>
+                                                            @Html.DropDownList("listIdProveedor", new SelectList(ViewBag.Lista2, "idProveedor", "nombreProveedor"), new { htmlAttributes = new { @type = "text", @class = "form-control", @id = "listIdProveedor", @name = "listIdProveedor" } })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="modal-footer justify-content-start">
+                                                            <input class="btn btn-primary" type="submit" value="Guardar" id="guardar" name="guardar" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#guardar").click, function () {
+                alert('Institucion Guardada con exito!');
+            }
+        }
+        );
+    </script>
+
+    <script>
+        function ObtenerCodigo() {
+            var e = document.getElementById("listCodigoBodega");
+            var result = e.options[e.selectedIndex].value;
+
+            document.getElementById("txtCodigoBodega").text = result;
+            document.getElementById("txtCodigoBodega").value = result;
+        }
+    </script>
+}
